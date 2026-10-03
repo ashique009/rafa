@@ -1,0 +1,95 @@
+:root {
+  --bg-deep: #030308;
+  --bg-container: #080812;
+  --text-primary: #f0f2ff;
+  --text-secondary: #8b92b3;
+  --text-muted: #4e5578;
+  
+  --neon-cyan: #00f3ff;
+  --neon-purple: #9d00ff;
+  --neon-magenta: #ff007f;
+  --neon-blue: #0051ff;
+  --neon-coral: #ff4d6d;
+  
+  --glass-bg: rgba(14, 16, 28, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(20px);
+  
+  --font-display: 'Syne', system-ui, -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  position: fixed;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #020206;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(22, 25, 44, 0.65);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px 0 rgba(0, 243, 255, 0.12),
+              0 0 20px rgba(157, 0, 255, 0.15);
+}
+
+/* Text glow utilities */
+.glow-text-cyan {
+  text-shadow: 0 0 20px rgba(0, 243, 255, 0.6), 0 0 40px rgba(0, 243, 255, 0.2);
+}
+
+.glow-text-purple {
+  text-shadow: 0 0 20px rgba(157, 0, 255, 0.6), 0 0 40px rgba(157, 0, 255, 0.2);
+}
+
+/* Live audio signal indicator */
+@keyframes liveBarBounce1 {
+  0%, 100% { height: 3px; }
+  50% { height: 10px; }
+}
+@keyframes liveBarBounce2 {
+  0%, 100% { height: 9px; }
+  50% { height: 4px; }
+}
+@keyframes liveBarBounce3 {
+  0%, 100% { height: 5px; }
+  50% { height: 11px; }
+}
+.live-bar-1 { animation: liveBarBounce1 0.6s ease infinite; }
+.live-bar-2 { animation: liveBarBounce2 0.45s ease infinite 0.15s; }
+.live-bar-3 { animation: liveBarBounce3 0.7s ease infinite 0.3s; }
+
