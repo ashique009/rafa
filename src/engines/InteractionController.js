@@ -1,12 +1,12 @@
 /**
  * InteractionController
- * Subtle, non-intrusive pointer interaction and future device motion hooks.
- * 90% reduced sensitivity to maintain calm ambient peace.
+ * Subtle, non-intrusive pointer interaction and device motion hooks
+ * for the minimal ambient music environment.
  */
 export class InteractionController {
-  constructor(canvas, liquidEngine) {
+  constructor(canvas, ambientField) {
     this.canvas = canvas;
-    this.liquidEngine = liquidEngine;
+    this.ambientField = ambientField;
 
     this.isDragging = false;
     this.lastX = 0;
@@ -45,9 +45,10 @@ export class InteractionController {
     this.lastX = x;
     this.lastY = y;
 
-    // Very gentle click ripple (90% reduced from previous version)
-    const normX = x / this.liquidEngine.width;
-    this.liquidEngine.splash(normX, 0.5, 3);
+    // Gentle particle dispersion on click
+    const normX = Math.max(0, Math.min(1, x / (this.ambientField.width || 1)));
+    const normY = Math.max(0, Math.min(1, y / (this.ambientField.height || 1)));
+    this.ambientField.disturb(normX, normY, 18.0);
   }
 
   onPointerMove(e) {
@@ -61,10 +62,11 @@ export class InteractionController {
     this.lastY = y;
 
     const speed = Math.sqrt(dx * dx + dy * dy);
-    // Only reacts to deliberate swift strokes, imparting a tiny whisper
-    if (speed > 16) {
-      const normX = x / this.liquidEngine.width;
-      this.liquidEngine.splash(normX, Math.min(0.25, speed * 0.006), 2);
+    // Subtle ambient wake trailing behind pointer
+    if (speed > 8) {
+      const normX = Math.max(0, Math.min(1, x / (this.ambientField.width || 1)));
+      const normY = Math.max(0, Math.min(1, y / (this.ambientField.height || 1)));
+      this.ambientField.disturb(normX, normY, Math.min(10.0, speed * 0.35));
     }
   }
 
@@ -75,15 +77,15 @@ export class InteractionController {
   setTilt(tiltX, tiltY) {
     this.motionData.tiltX = tiltX;
     this.motionData.tiltY = tiltY;
-    this.liquidEngine.applyMotion(this.motionData);
+    this.ambientField.applyMotion(this.motionData);
   }
 
   triggerShake(strength = 0.5) {
     this.motionData.shakeImpulse = strength;
-    this.liquidEngine.applyMotion(this.motionData);
+    this.ambientField.applyMotion(this.motionData);
     setTimeout(() => {
       this.motionData.shakeImpulse = 0;
-      this.liquidEngine.applyMotion(this.motionData);
+      this.ambientField.applyMotion(this.motionData);
     }, 300);
   }
 }

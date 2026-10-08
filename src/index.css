@@ -1,6 +1,6 @@
 :root {
-  --bg-deep: #030308;
-  --bg-container: #080812;
+  --bg-deep: #010206;
+  --bg-container: #040612;
   --text-primary: #f0f2ff;
   --text-secondary: #8b92b3;
   --text-muted: #4e5578;
@@ -44,7 +44,7 @@ html, body {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background: #020206;
+  background: #010206;
 }
 
 /* Glassmorphism helpers */
